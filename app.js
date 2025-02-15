@@ -1,38 +1,32 @@
-function App() {
-  return (
-    <div className="container mx-auto p-4">
+function App(item) {
+  return `<div className="container mx-auto p-4">
       <div className="row">
         <div className="col-md-4">
           <div className="bg-light p-3">
             <img
-              src="https://randomuser.me/api/portraits/women/61.jpg"
+              src=${item.picture.medium}
               alt="頭像"
               className="img-fluid rounded-circle"
             />
-            <h2 className="mb-0">Mona Heen</h2>
-            <p className="mb-0">mona.heen@example.com</p>
+            <h2 className="mb-0">${item.name.first} ${item.name.last}</h2>
+            <p className="mb-0">${item.email}</p>
           </div>
-        </div>
-        <div className="col-md-4">
-          <div className="bg-light p-3">
-            <img
-              src="https://randomuser.me/api/portraits/women/10.jpg"
-              alt="頭像"
-              className="img-fluid rounded-circle"
-            />
-            <h2 className="mb-0">Susan Craig</h2>
-            <p className="mb-0">susan.craig@example.com</p>
-          </div>
-        </div>
+        </div>      
       </div>
-    </div>
-  );
+    </div>`;
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(<App />);
 
-let data= [];                                                            
-axios.get('https://randomuser.me/api/?results=10')
-.then(function(res){
-
-})
+let data = [];
+const wrap = document.querySelector("#root");
+axios
+  .get("https://randomuser.me/api/?results=10")
+  .then(function (res) {
+    data = res.data.results;
+    let content = data.map((item) => App(item)).join("");
+    wrap.innerHTML = content;
+  })
+  .catch((err) => {
+    alert(err.message || "未取得資料");
+  });
