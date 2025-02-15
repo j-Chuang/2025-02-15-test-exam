@@ -30,3 +30,9 @@ function App() {
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+
+let data= [];                                                            
+axios.get('https://randomuser.me/api/?results=10')
+.then(function(res){
+
+})
